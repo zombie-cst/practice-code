@@ -1,8 +1,7 @@
 from database.db_automobiles_rental import initialize_db
 class Automobiles:
-    def __init__(self, id, brand, model, yearRelease, 
-                 fuel, speed, transmissionBox, drive, 
-                 color, price, bodyType_id):
+    def __init__(self, id, brand, model, yearRelease, fuel, speed,
+                 transmissionBox, drive, color, price, bodyType_id):
         self.__id = id
         self.__brand = brand
         self.__model = model
