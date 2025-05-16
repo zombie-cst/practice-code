@@ -1,6 +1,6 @@
 from models_ar.booking import Booking, get_all_booking
-from models_ar.automobiles import get_all_automobiles
-from models_ar.clients import get_all_clients
+from models_ar.automobiles import get_all_automobiles, get_automobiles_by_id
+from models_ar.clients import get_all_clients, get_clients_by_id
 def menu_booking():
     while True:
         print("\n=== Бронь 🔑 ===")

@@ -1,5 +1,5 @@
 from models_ar.automobiles import Automobiles, get_all_automobiles
-from models_ar.bodyType import get_all_bodyType
+from models_ar.bodyType import get_all_body_type, get_body_type_by_id
 def menu_automobiles():
     while True:
         print("\n----- Автомобили 🚗 -----")
@@ -20,7 +20,7 @@ def menu_automobiles():
             brend = input('Бренд: ')
             model = input('Модель: ')
             print('\nДоступные типы:')
-            type = get_all_bodyType()
+            type = get_all_body_type()
             for n in type:
                 print(f"{n.id} - {n.name}")
             bodyType_id = int(input('Введите ID типа: '))
@@ -48,7 +48,7 @@ def menu_automobiles():
             brend = input('Бренд: ')
             model = input('Модель: ')
             print('\nДоступные типы:')
-            type = get_all_bodyType()
+            type = get_all_body_type()
             for n in type:
                 print(f"{n.id} - {n.name}")
             bodyType_id = int(input('Введите ID типа: '))

@@ -1,5 +1,5 @@
 from models_ar.contract import Contract, get_all_contract
-from models_ar.booking import get_all_booking
+from models_ar.booking import get_all_booking, get_booking_by_id
 from models_ar.automobiles import Automobiles
 def menu_contract():
     while True:

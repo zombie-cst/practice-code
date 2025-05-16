@@ -14,11 +14,11 @@ class Automobiles:
     
     def save(self):
         conn = get_connection()
-        cur = conn.cursot()
+        cur = conn.cursor()
         if self.__id is None:
             cur.execute('''INSERT INTO Automobiles(brand, model, yearRelease,
                         fuel, speed, color, price, bodyType_id)
-                        VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)''',
+                        VALUES(?, ?, ?, ?, ?, ?, ?, ?)''',
                         (self.__brand, self.__model, self.__yearRelease, self.__fuel,
                          self.__speed, self.__color, self.__price, self.__bodyType_id))
             self.__id = cur.lastrowid
@@ -27,13 +27,13 @@ class Automobiles:
                         fuel = ?, speed = ?, color = ?, price = ?, bodyType_id = ?''',
                         (self.__brand, self.__model, self.__yearRelease, self.__fuel,
                          self.__speed, self.__color, self.__price, self.__bodyType_id))
-            conn.commit()
-            conn.close()
+        conn.commit()
+        conn.close()
 
     def delete(self):
-        if self.__id is None:
+        if self.__id is not None:
             conn = get_connection()
-            cur = conn.cursot()
+            cur = conn.cursor()
             cur.execute('''DELETE FROM Automobiles WHERE id = ?''', (self.__id,))
             conn.commit()
             conn.close()
@@ -48,3 +48,15 @@ class Automobiles:
         return [Automobiles(id=row[0], brand=row[1], model=row[2], yearRelease=row[3], fuel=row[4], 
                             speed=row[5], color=row[6], price=row[7], bodyType_id=row[8])
                 for row in rows ]
+
+    def get_automobiles_by_id(automobiles_id):
+        conn = get_connection()
+        cursor = conn.cursor()
+        cursor.execute("""SELECT id, brand, model, yearRelease, fuel, speed, 
+                       color, price, bodyType_id FROM Automobiles WHERE id = ? """, (automobiles_id,))
+        row = cursor.fetchone()
+        conn.close()
+        if row:
+            return Automobiles(id=row[0], brand=row[1], model=row[2], yearRelease=row[3], fuel=row[4],
+                               speed=row[5], color=row[6], price=row[7], bodyType_id=row[8])
+        return None
