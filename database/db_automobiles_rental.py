@@ -2,12 +2,10 @@ import sqlite3
 def initialize_db():
     conn = sqlite3.connect('system_of_events.db')
     cur = conn.cursor()
-    
     #Создание таблицы "Тип кузова"
     cur.execute('''CREATE TABLE IF NOT EXISTS BodyType(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL)''')
-    
     #Создание таблицы "Автомобили"
     cur.execute('''CREATE TABLE IF NOT EXISTS Automobiles(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -16,13 +14,10 @@ def initialize_db():
                 yearRelease INTEGER NOT NULL,
                 fuel TEXT NOT NULL,
                 speed REAL NOT NULL,
-                transmissionBox TEXT NOT NULL,
-                drive TEXT NOT NULL,
                 color TEXT NOT NULL,
                 price REAL NOT NULL,
                 bodyType_id INTEGER,
                 FOREIGN KEY (bodyType_id) REFERENCES BodyType(id))''')
-    
     #Создание таблицы "Клиенты"
     cur.execute('''CREATE TABLE IF NOT EXISTS Clients(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -31,7 +26,6 @@ def initialize_db():
                 patronymic TEXT NOT NULL,
                 addres TEXT NOT NULL,
                 phoneNumber TEXT NOT NULL)''')
-
     #Создание таблицы "Бронирование"
     cur.execute('''CREATE TABLE IF NOT EXISTS Booking(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -40,11 +34,8 @@ def initialize_db():
                 addres TEXT NOT NULL,
                 automobiles_id INTEGER,
                 clients_id INTEGER,
-                employees_id INTEGER,
                 FOREIGN KEY (automobiles_id) REFERENCES Automobiles(id),
-                FOREIGN KEY (clients_id) REFERENCES Clients(id),
-                FOREIGN KEY (employees_id) REFERENCES Employees(id))''')
-    
+                FOREIGN KEY (clients_id) REFERENCES Clients(id))''')
     #Создание таблицы "Договор"
     cur.execute('''CREATE TABLE IF NOT EXISTS Contract(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
