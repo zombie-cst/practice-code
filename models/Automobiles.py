@@ -48,15 +48,3 @@ class Automobiles:
         return [Automobiles(id=row[0], brand=row[1], model=row[2], yearRelease=row[3], fuel=row[4], 
                             speed=row[5], color=row[6], price=row[7], bodyType_id=row[8])
                 for row in rows ]
-    
-    def get_automobiles_by_id(automobiles_id):
-        conn = initialize_db()
-        cur = conn.cursor()
-        cur.execute('''SELECT id, brand, model, yearRelease, fuel, speed, 
-                       color, price, bodyType_id FROM Automobiles WHERE id = ?''', (automobiles_id,))
-        row = cur.fetchone()
-        conn.close()
-        if row:
-            Automobiles(id=row[0], brand=row[1], model=row[2], yearRelease=row[3], fuel=row[4], 
-                        speed=row[5], color=row[8], price=row[9], bodyType_id=row[10])
-        return None

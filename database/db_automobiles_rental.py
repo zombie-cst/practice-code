@@ -39,7 +39,6 @@ def initialize_db():
     #Создание таблицы "Договор"
     cur.execute('''CREATE TABLE IF NOT EXISTS Contract(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
-                date TEXT NOT NULL,
                 rules TEXT NOT NULL,
                 discounts TEXT NOT NULL,
                 finalPrice REAL NOT NULL,

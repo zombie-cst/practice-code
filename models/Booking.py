@@ -46,15 +46,3 @@ class Booking:
         return [Booking(id=row[0], dateIssue=row[1], returnDate=row[2], addres=row[3],
                         automobiles_id=row[4], clients_id=row[5], employees_id=row[6])
                 for row in rows ]
-    
-    def get_booking_by_id(booking_id):
-        conn = initialize_db()
-        cur = conn.cursor()
-        cur.execute('''SELECT id, dateIssue, returnDate, addres, automobiles_id, clients_id, 
-                       employees_id FROM Booking WHERE id = ?''', (booking_id,))
-        row = cur.fetchone()
-        conn.close()
-        if row:
-            Booking(id=row[0], dateIssue=row[1], returnDate=row[2], addres=row[3],
-                    automobiles_id=row[4], clients_id=row[5], employees_id=row[6])
-        return None

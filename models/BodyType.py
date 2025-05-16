@@ -31,13 +31,3 @@ class BodyType:
         conn.close()
         return [BodyType(id=row[0], name=row[1])
                 for row in rows ]
-    
-    def get_bodytype_by_id(bodytype_id):
-        conn = initialize_db()
-        cur = conn.cursor()
-        cur.execute('''SELECT id, name, FROM BodyType WHERE id = ?''', (bodytype_id,))
-        row = cur.fetchone()
-        conn.close()
-        if row:
-            BodyType(id=row[0], name=row[1])
-        return None

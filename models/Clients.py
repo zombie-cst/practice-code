@@ -44,15 +44,3 @@ class Clients:
         return [Clients(id=row[0], firstName=row[1], lastName=row[2],
                             patronymic=row[3], addres=row[4], phoneNumber=row[5])
                 for row in rows ]
-    
-    def get_clients_by_id(clients_id):
-        conn = initialize_db()
-        cur = conn.cursor()
-        cur.execute('''SELECT id, firstName, lastName, patronymic, addres,
-                    phoneNumber FROM Clients WHERE id = ?''', (clients_id,))
-        row = cur.fetchone()
-        conn.close()
-        if row:
-            Clients(id=row[0], firstName=row[1], lastName=row[2],
-                        patronymic=row[3], addres=row[4], phoneNumber=row[5])
-        return None

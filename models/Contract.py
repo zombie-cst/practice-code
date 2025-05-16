@@ -1,8 +1,7 @@
 from database.db_automobiles_rental import initialize_db
 class Contract:
-    def __init__(self, id, date, rules, discounts, finalPrice, booking_id):
+    def __init__(self, id, rules, discounts, finalPrice, booking_id):
         self.__id = id
-        self.__date = date
         self.__rules = rules
         self.__discounts = discounts
         self.__finalPrice = finalPrice
@@ -12,16 +11,16 @@ class Contract:
         conn = initialize_db()
         cur = conn.cursot()
         if self.__id is None:
-            cur.execute('''INSERT INTO Contract(date, rules,
+            cur.execute('''INSERT INTO Contract(rules,
                         discounts, finalPrice, booking_id)
                         VALUES(?, ?, ?, ?, ?)''',
-                        (self.__date, self.__rules, self.__discounts,
+                        (self.__rules, self.__discounts,
                          self.__finalPrice, self.__booking_id))
             self.__id = cur.lastrowid
         else:
-            cur.execute('''UPDATE Contract SET date = ?, rules = ?,
+            cur.execute('''UPDATE Contract SET rules = ?,
                         discounts = ?, finalPrice = ?, booking_id = ?''',
-                        (self.__date, self.__rules, self.__discounts,
+                        (self.__rules, self.__discounts,
                          self.__finalPrice, self.__booking_id))
             conn.commit()
             conn.close()
@@ -37,22 +36,10 @@ class Contract:
     def get_all_contract():
         conn = initialize_db()
         cur = conn.cursor()
-        cur.execute('''SELECT id, date, rules, discounts, finalPrice,
+        cur.execute('''SELECT id, rules, discounts, finalPrice,
                     booking_id FROM Contract''')
         rows = cur.fetchall()
         conn.close()
-        return [Contract(id=row[0], date=row[1], rules=row[2],
-                            discounts=row[3], finalPrice=row[4], booking_id=row[5])
+        return [Contract(id=row[0], rules=row[1], discounts=row[2], 
+                            finalPrice=row[3], booking_id=row[4])
                 for row in rows ]
-    
-    def get_contract_by_id(contract_id):
-        conn = initialize_db()
-        cur = conn.cursor()
-        cur.execute('''SELECT id, date, rules, discounts, finalPrice,
-                    booking_id FROM Contract WHERE id = ?''', (contract_id,))
-        row = cur.fetchone()
-        conn.close()
-        if row:
-            Contract(id=row[0], date=row[1], rules=row[2],
-                        discounts=row[3], finalPrice=row[4], booking_id=row[5])
-        return None
