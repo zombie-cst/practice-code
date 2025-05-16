@@ -20,14 +20,14 @@ class BodyType:
             conn.commit()
             conn.close()
 
-    def get_all_body_type():
-        conn = get_connection()
-        cur = conn.cursor()
-        cur.execute('''SELECT id, name FROM BodyType''')
-        rows = cur.fetchall()
-        conn.close()
-        return [BodyType(id=row[0], name=row[1])
-                for row in rows ]
+    def get_all_body_type(self):
+        if self.__id is not None:
+            conn = get_connection()
+            cur = conn.cursor()
+            cur.execute('''SELECT id, name FROM BodyType''')
+            rows = cur.fetchall()
+            conn.close()
+            return [BodyType(id=row[0], name=row[1]) for row in rows]
 
     def get_body_type_by_id(body_type_id):
         conn = get_connection()

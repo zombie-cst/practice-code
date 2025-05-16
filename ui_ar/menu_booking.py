@@ -9,7 +9,7 @@ def menu_booking():
         print("3. ❌Удалить бронь")
         print("4. 🛠Изменить бронь")
         print("0. 🚪Назад в главное меню")
-        choice = input("Выберите действие: ")
+        choice = input("\nВыберите действие: ")
         if choice == '1':
             booking = get_all_booking()
             print('\n📜Список броней:')
@@ -21,7 +21,7 @@ def menu_booking():
             print('\n☑️Добавление новую бронь.')
             dateIssue = input('Дата выпуска: ')
             returnDate = input('Дата возврата: ')
-            addres = int(input('Адрес: '))
+            addres = input('Адрес: ')
             print('\nДоступные автомобили:')
             automobiles = get_all_automobiles()
             for n in automobiles:
@@ -38,9 +38,12 @@ def menu_booking():
             print('☑️Бронь добавлен.')
         elif choice == '3':
             id = int(input('❌Введите ID брони, который хотите удалить: '))
-            booking = Booking(id=int(id))
-            booking.delete()
-            print('❌Бронь удалён.')
+            if id is not None:
+                booking = Booking(id=int(id))
+                booking.delete()
+                print('❌Бронь удалён.')
+            else:
+                print('Бронь не найдена!')
         elif choice == '4':
             id = int(input('🛠Введите ID брони, который хотите обновить: '))
             print("\nОставьте поле пустым, чтобы не изменять значение.")
@@ -50,7 +53,7 @@ def menu_booking():
                 continue
             dateIssue = input('Дата выпуска: ')
             returnDate = input('Дата возврата: ')
-            addres = int(input('Адрес: '))
+            addres = input('Адрес: ')
             print('\nДоступные автомобили:')
             automobiles = get_all_automobiles()
             for n in automobiles:

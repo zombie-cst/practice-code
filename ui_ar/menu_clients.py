@@ -7,7 +7,7 @@ def menu_clients():
         print("3. ❌Удалить клиента")
         print("4. 🛠Изменить клиента")
         print("0. 🚪Назад в главное меню")
-        choice = input("Выберите действие: ")
+        choice = input("\nВыберите действие: ")
         if choice == '1':
             clients = get_all_clients()
             print('\n📜Список клиентов:')
@@ -19,7 +19,7 @@ def menu_clients():
             print('\n☑️Добавление нового клиента.')
             firstName = input('Имя: ')
             lastName = input('Фамилия: ')
-            patronymic = int(input('Отчество: '))
+            patronymic = input('Отчество: ')
             addres = input('Адрес: ')
             phoneNumber = input('Номер телефона: ')
             clients = Clients(firstName=firstName, lastName=lastName, patronymic=patronymic,
@@ -28,9 +28,12 @@ def menu_clients():
             print('☑️Клиент добавлен.')
         elif choice == '3':
             id = int(input('❌Введите ID клиента, который хотите удалить: '))
-            clients = Clients(id=int(id))
-            clients.delete()
-            print('❌Клиент удалён.')
+            if id is not None:
+                clients = Clients(id=int(id))
+                clients.delete()
+                print('❌Клиент удалён.')
+            else:
+                print('Клиент не найден!')
         elif choice == '4':
             id = int(input('🛠Введите ID клиента, который хотите обновить: '))
             print("\nОставьте поле пустым, чтобы не изменять значение")
@@ -40,7 +43,7 @@ def menu_clients():
                 continue
             firstName = input('Имя: ')
             lastName = input('Фамилия: ')
-            patronymic = int(input('Отчество: '))
+            patronymic = input('Отчество: ')
             addres = input('Адрес: ')
             phoneNumber = input('Номер телефона: ')
             clients = Clients(firstName=firstName if firstName else current_clients.firstName,

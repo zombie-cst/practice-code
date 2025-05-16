@@ -38,16 +38,17 @@ class Automobiles:
             conn.commit()
             conn.close()
 
-    def get_all_automobiles():
-        conn = get_connection()
-        cur = conn.cursor()
-        cur.execute('''SELECT id, brand, model, yearRelease, fuel, speed, 
-                       color, price, bodyType_id FROM Automobiles''')
-        rows = cur.fetchall()
-        conn.close()
-        return [Automobiles(id=row[0], brand=row[1], model=row[2], yearRelease=row[3], fuel=row[4], 
-                            speed=row[5], color=row[6], price=row[7], bodyType_id=row[8])
-                for row in rows ]
+    def get_all_automobiles(self):
+        if self.__id is not None:
+            conn = get_connection()
+            cur = conn.cursor()
+            cur.execute('''SELECT id, brand, model, yearRelease, fuel, speed, 
+                           color, price, bodyType_id FROM Automobiles''')
+            rows = cur.fetchall()
+            conn.close()
+            return [Automobiles(id=row[0], brand=row[1], model=row[2], yearRelease=row[3], fuel=row[4], 
+                                speed=row[5], color=row[6], price=row[7], bodyType_id=row[8])
+                    for row in rows ]
 
     def get_automobiles_by_id(automobiles_id):
         conn = get_connection()

@@ -1,4 +1,4 @@
-from models_ar.bodyType import BodyType, get_all_bodyType
+from models_ar.bodyType import BodyType, get_all_body_type
 def menu_bodyType():
     while True:
         print("\n=== Типы 🚙 ===")
@@ -6,9 +6,9 @@ def menu_bodyType():
         print("2. ☑️Добавить тип")
         print("3. ❌Удалить тип")
         print("0. 🚪Назад в главное меню")
-        choice = input("Выберите действие: ")
+        choice = input("\nВыберите действие: ")
         if choice == '1':
-            bodyType = get_all_bodyType()
+            bodyType = get_all_body_type()
             print('\n📜Список типов:')
             for n in bodyType:
                 print(f'\n{n.id}. {n.name}')
@@ -20,9 +20,12 @@ def menu_bodyType():
             print('☑️Тип добавлен.')
         elif choice == '3':
             id = int(input('❌Введите ID типа, который хотите удалить: '))
-            bodyType = BodyType(id=int(id))
-            bodyType.delete()
-            print('❌Тип удалён.')
+            if id is not None:
+                bodyType = BodyType(id=int(id))
+                bodyType.delete()
+                print('❌Тип удалён.')
+            else:
+                print('Тип не найден!')
         elif choice == '0':
             break
         else:

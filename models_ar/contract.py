@@ -33,16 +33,17 @@ class Contract:
             conn.commit()
             conn.close()
 
-    def get_all_contract():
-        conn = get_connection()
-        cur = conn.cursor()
-        cur.execute('''SELECT id, rules, discounts, finalPrice,
-                    booking_id FROM Contract''')
-        rows = cur.fetchall()
-        conn.close()
-        return [Contract(id=row[0], rules=row[1], discounts=row[2], 
-                            finalPrice=row[3], booking_id=row[4])
-                for row in rows ]
+    def get_all_contract(self):
+        if self.__id is not None:
+            conn = get_connection()
+            cur = conn.cursor()
+            cur.execute('''SELECT id, rules, discounts, finalPrice,
+                        booking_id FROM Contract''')
+            rows = cur.fetchall()
+            conn.close()
+            return [Contract(id=row[0], rules=row[1], discounts=row[2], 
+                                finalPrice=row[3], booking_id=row[4])
+                    for row in rows ]
     
     def get_contract_by_id(contract_id):
         conn = get_connection()
@@ -52,6 +53,6 @@ class Contract:
         row = cursor.fetchone()
         conn.close()
         if row:
-            return Contract(id=row[0], rules=row[2], discounts=row[3],
-                            finalPrice=row[4], booking_id=row[5])
+            return Contract(id=row[0], rules=row[1], discounts=row[2],
+                            finalPrice=row[3], booking_id=row[4])
         return None

@@ -34,16 +34,17 @@ class Clients:
             conn.commit()
             conn.close()
 
-    def get_all_clients():
-        conn = get_connection()
-        cur = conn.cursor()
-        cur.execute('''SELECT id, firstName, lastName, patronymic, addres,
-                    phoneNumber FROM Clients''')
-        rows = cur.fetchall()
-        conn.close()
-        return [Clients(id=row[0], firstName=row[1], lastName=row[2],
-                            patronymic=row[3], addres=row[4], phoneNumber=row[5])
-                for row in rows ]
+    def get_all_clients(self):
+        if self.__id is not None:
+            conn = get_connection()
+            cur = conn.cursor()
+            cur.execute('''SELECT id, firstName, lastName, patronymic, addres,
+                        phoneNumber FROM Clients''')
+            rows = cur.fetchall()
+            conn.close()
+            return [Clients(id=row[0], firstName=row[1], lastName=row[2],
+                                patronymic=row[3], addres=row[4], phoneNumber=row[5])
+                    for row in rows ]
     
     def get_clients_by_id(clients_id):
         conn = get_connection()
