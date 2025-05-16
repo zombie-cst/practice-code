@@ -1,30 +1,27 @@
-from database.db_automobiles_rental import initialize_db
+from database_ar.db_automobiles_rental import get_connection
 class BodyType:
     def __init__(self, id, name):
         self.__id = id
         self.__name = name
     
     def save(self):
-        conn = initialize_db()
-        cur = conn.cursot()
         if self.__id is None:
+            conn = get_connection()
+            cur = conn.cursot()
             cur.execute('''INSERT INTO BodyType(name) VALUES(?)''', (self.__name,))
-            self.__id = cur.lastrowid
-        else:
-            cur.execute('''UPDATE BodyType SET name = ?''', (self.__name,))
             conn.commit()
             conn.close()
 
     def delete(self):
         if self.__id is None:
-            conn = initialize_db()
+            conn = get_connection()
             cur = conn.cursot()
             cur.execute('''DELETE FROM BodyType WHERE id = ?''', (self.__id,))
             conn.commit()
             conn.close()
 
     def get_all_bodytype():
-        conn = initialize_db()
+        conn = get_connection()
         cur = conn.cursor()
         cur.execute('''SELECT id, name, FROM BodyType''')
         rows = cur.fetchall()

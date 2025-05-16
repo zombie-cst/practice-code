@@ -1,12 +1,12 @@
-from database.db_automobiles_rental import initialize_db
-from ui.menu import main_menu
-from ui.menu_bodyType import menu_bodyType
-from ui.menu_automobiles import menu_automobiles
-from ui.menu_clients import menu_clients
-from ui.menu_booking import menu_booking
-from ui.menu_contract import menu_contract
+from database_ar.db_automobiles_rental import get_connection
+from ui_ar.menu import main_menu
+from ui_ar.menu_bodyType import menu_bodyType
+from ui_ar.menu_automobiles import menu_automobiles
+from ui_ar.menu_clients import menu_clients
+from ui_ar.menu_booking import menu_booking
+from ui_ar.menu_contract import menu_contract
 def main():
-    initialize_db()
+    get_connection()
     while True:
         choice = main_menu()
         if choice == '1':

@@ -1,4 +1,4 @@
-from database.db_automobiles_rental import initialize_db
+from database_ar.db_automobiles_rental import get_connection
 class Automobiles:
     def __init__(self, id, brand, model, yearRelease, fuel, 
                  speed, color, price, bodyType_id):
@@ -13,7 +13,7 @@ class Automobiles:
         self.__bodyType_id = bodyType_id
     
     def save(self):
-        conn = initialize_db()
+        conn = get_connection()
         cur = conn.cursot()
         if self.__id is None:
             cur.execute('''INSERT INTO Automobiles(brand, model, yearRelease,
@@ -32,14 +32,14 @@ class Automobiles:
 
     def delete(self):
         if self.__id is None:
-            conn = initialize_db()
+            conn = get_connection()
             cur = conn.cursot()
             cur.execute('''DELETE FROM Automobiles WHERE id = ?''', (self.__id,))
             conn.commit()
             conn.close()
 
     def get_all_automobiles():
-        conn = initialize_db()
+        conn = get_connection()
         cur = conn.cursor()
         cur.execute('''SELECT id, brand, model, yearRelease, fuel, speed, 
                        color, price, bodyType_id FROM Automobiles''')

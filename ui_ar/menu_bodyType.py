@@ -1,4 +1,4 @@
-from models.bodyType import BodyType, get_all_bodyType
+from models_ar.bodyType import BodyType, get_all_bodyType
 def menu_bodyType():
     while True:
         print("\n=== Типы 🚙 ===")

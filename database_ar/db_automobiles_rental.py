@@ -1,6 +1,9 @@
 import sqlite3
+from database_ar.config import BD_NAME
+def get_connection():
+    return sqlite3.connect(BD_NAME)
 def initialize_db():
-    conn = sqlite3.connect('system_of_events.db')
+    conn = get_connection()
     cur = conn.cursor()
     #Создание таблицы "Тип кузова"
     cur.execute('''CREATE TABLE IF NOT EXISTS BodyType(

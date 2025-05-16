@@ -1,4 +1,4 @@
-from database.db_automobiles_rental import initialize_db
+from database_ar.db_automobiles_rental import get_connection
 class Booking:
     def __init__(self, id, dateIssue, returnDate, addres, 
                  automobiles_id, clients_id, employees_id):
@@ -11,7 +11,7 @@ class Booking:
         self.__employees_id = employees_id
     
     def save(self):
-        conn = initialize_db()
+        conn = get_connection()
         cur = conn.cursot()
         if self.__id is None:
             cur.execute('''INSERT INTO Booking(dateIssue, returnDate, addres,
@@ -30,14 +30,14 @@ class Booking:
 
     def delete(self):
         if self.__id is None:
-            conn = initialize_db()
+            conn = get_connection()
             cur = conn.cursot()
             cur.execute('''DELETE FROM Booking WHERE id = ?''', (self.__id,))
             conn.commit()
             conn.close()
 
     def get_all_booking():
-        conn = initialize_db()
+        conn = get_connection()
         cur = conn.cursor()
         cur.execute('''SELECT id, dateIssue, returnDate, addres, automobiles_id,
                     clients_id, employees_id FROM Booking''')

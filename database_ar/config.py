@@ -1,0 +1,1 @@
+BD_NAME = "system_of_events.db"

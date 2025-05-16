@@ -1,4 +1,4 @@
-from database.db_automobiles_rental import initialize_db
+from database_ar.db_automobiles_rental import get_connection
 class Contract:
     def __init__(self, id, rules, discounts, finalPrice, booking_id):
         self.__id = id
@@ -8,7 +8,7 @@ class Contract:
         self.__booking_id = booking_id
     
     def save(self):
-        conn = initialize_db()
+        conn = get_connection()
         cur = conn.cursot()
         if self.__id is None:
             cur.execute('''INSERT INTO Contract(rules,
@@ -27,14 +27,14 @@ class Contract:
 
     def delete(self):
         if self.__id is None:
-            conn = initialize_db()
+            conn = get_connection()
             cur = conn.cursot()
             cur.execute('''DELETE FROM Contract WHERE id = ?''', (self.__id,))
             conn.commit()
             conn.close()
 
     def get_all_contract():
-        conn = initialize_db()
+        conn = get_connection()
         cur = conn.cursor()
         cur.execute('''SELECT id, rules, discounts, finalPrice,
                     booking_id FROM Contract''')

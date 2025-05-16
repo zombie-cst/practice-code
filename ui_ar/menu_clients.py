@@ -1,4 +1,4 @@
-from models.clients import Clients, get_all_clients
+from model_ar.clients import Clients, get_all_clients
 def menu_clients():
     while True:
         print("\n=== Клиенты 👥 ===")

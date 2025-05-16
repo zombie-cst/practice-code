@@ -1,4 +1,4 @@
-from database.db_automobiles_rental import initialize_db
+from database_ar.db_automobiles_rental import get_connection
 class Clients:
     def __init__(self, id, firstName, lastName, patronymic, addres, phoneNumber):
         self.__id = id
@@ -9,7 +9,7 @@ class Clients:
         self.__phoneNumber = phoneNumber
     
     def save(self):
-        conn = initialize_db()
+        conn = get_connection()
         cur = conn.cursot()
         if self.__id is None:
             cur.execute('''INSERT INTO Clients(firstName, lastName,
@@ -28,14 +28,14 @@ class Clients:
 
     def delete(self):
         if self.__id is None:
-            conn = initialize_db()
+            conn = get_connection()
             cur = conn.cursot()
             cur.execute('''DELETE FROM Clients WHERE id = ?''', (self.__id,))
             conn.commit()
             conn.close()
 
     def get_all_clients():
-        conn = initialize_db()
+        conn = get_connection()
         cur = conn.cursor()
         cur.execute('''SELECT id, firstName, lastName, patronymic, addres,
                     phoneNumber FROM Clients''')

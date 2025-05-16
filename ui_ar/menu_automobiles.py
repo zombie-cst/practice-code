@@ -1,5 +1,5 @@
-from models.automobiles import Automobiles, get_all_automobiles
-from models.bodyType import get_all_bodyType
+from models_ar.automobiles import Automobiles, get_all_automobiles
+from models_ar.bodyType import get_all_bodyType
 def menu_automobiles():
     while True:
         print("\n----- Автомобили 🚗 -----")
