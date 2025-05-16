@@ -60,4 +60,4 @@ def menu_contract():
         elif choice == '0':
             break
         else:
-            print('Некоректный ввод.')
+            print('❌Некоректный ввод.')

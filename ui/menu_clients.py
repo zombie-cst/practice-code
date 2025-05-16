@@ -53,4 +53,4 @@ def menu_clients():
         elif choice == '0':
             break
         else:
-            print('Некоректный ввод.')
+            print('❌Некоректный ввод.')
