@@ -2,19 +2,21 @@ from models_ar.clients import Clients, get_all_clients
 def menu_clients():
     while True:
         print("\n=== Клиенты 👥 ===")
-        print("1. 👀Показать все клиентов")
+        print("1. 👀Показать всех клиентов")
         print("2. ☑️Добавить клиента")
         print("3. ❌Удалить клиента")
         print("4. 🛠Изменить клиента")
         print("0. 🚪Назад в главное меню")
-        choice = input("\nВыберите действие: ")
+        choice = input("Выберите действие: ")
         if choice == '1':
             clients = get_all_clients()
-            print('\n📜Список клиентов:')
-            for n in clients:
-                print(f'\n{n.id}. ФИО: {n.lastName}, {n.firstName} {n.patronymic}, '
-                      f'Номер телефона: {n.phoneNumber}'
-                      f'Адрес: {n.addres}')
+            if clients is not None:
+                print('\n📜Список клиентов:')
+                for n in clients:
+                    print(f'{n.id}. ФИО: {n.lastName} {n.firstName} {n.patronymic}'
+                          f'\nНомер телефона: {n.phoneNumber} | Адрес: {n.addres}')
+            else:
+                print('Клиентов пока нет в списке!')
         elif choice == '2':
             print('\n☑️Добавление нового клиента.')
             firstName = input('Имя: ')
@@ -22,8 +24,7 @@ def menu_clients():
             patronymic = input('Отчество: ')
             addres = input('Адрес: ')
             phoneNumber = input('Номер телефона: ')
-            clients = Clients(firstName=firstName, lastName=lastName, patronymic=patronymic,
-                              addres=addres, phoneNumber=phoneNumber)
+            clients = Clients(firstName=firstName, lastName=lastName, patronymic=patronymic, addres=addres, phoneNumber=phoneNumber)
             clients.save()
             print('☑️Клиент добавлен.')
         elif choice == '3':

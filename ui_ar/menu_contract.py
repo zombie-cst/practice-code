@@ -1,6 +1,5 @@
 from models_ar.contract import Contract, get_all_contract
 from models_ar.booking import get_all_booking, get_booking_by_id
-from models_ar.automobiles import Automobiles
 def menu_contract():
     while True:
         print("\n=== Договоры 📑 ===")
@@ -9,26 +8,30 @@ def menu_contract():
         print("3. ❌Удалить договор")
         print("4. 🛠Изменить договор")
         print("0. 🚪Назад в главное меню")
-        choice = input("\nВыберите действие: ")
+        choice = input("Выберите действие: ")
         if choice == '1':
             contract = get_all_contract()
-            print('\n📜Список договоров:')
-            for n in contract:
-                print(f'\n{n.id}. {n.rules}, {n.discount}, '
-                      f'{n.finalPrice}, {n.booking_id}')
+            if contract is not None:
+                print('\n📜Список договоров:')
+                for n in contract:
+                    print(f'{n.id}. Штрафы: {n.rules}, Скидкa: {n.discounts}'
+                          f'\nБронь ID: {n.booking_id}')
+            else:
+                print('Договоров пока нет в списке!')
         elif choice == '2':
             print('\n☑️Добавление нового договора.')
             rules = input('Штрафы: ')
-            discount = int(input('Скидки(%): '))
+            if rules == '':
+                rules = 'Отсутствуют'
+            discounts = int(input('Скидки(%): '))
             print('\nДоступные брони:')
             booking = get_all_booking()
             for n in booking:
-                print(f"{n.id} - {n.name}")
+                print(f'{n.id}. Даты выдачи и возврата:{n.dateIssue} - {n.returnDate} | Адрес: {n.addres} '
+                          f'\nАвтомобиль ID: {n.automobiles_id}'
+                          f'\nКлиент ID: {n.clients_id}')
             booking_id = int(input('Введите ID брони: '))
-            price = Automobiles[booking_id].price
-            finalPrice = price-((price/100)*discount)
-            contract = Contract(rules=rules, discount=discount,
-                                finalPrice=finalPrice, booking_id=booking_id)
+            contract = Contract(rules=rules, discounts=discounts, booking_id=booking_id)
             contract.save()
             print('☑️Договор добавлен.')
         elif choice == '3':
@@ -47,17 +50,16 @@ def menu_contract():
                 print("Дговор не найден!")
                 continue
             rules = input('Штрафы: ')
-            discount = int(input('Скидки(%): '))
+            discounts = int(input('Скидки(%): '))
             print('\nДоступные брони:')
             type = get_all_booking()
             for n in type:
-                print(f"{n.id} - {n.name}")
+                print(f'{n.id}. Даты выдачи и возврата:{n.dateIssue} - {n.returnDate} | Адрес: {n.addres} '
+                          f'\nАвтомобиль ID: {n.automobiles_id}'
+                          f'\nКлиент ID: {n.clients_id}')
             booking_id = int(input('Введите ID брони: '))
-            price = Automobiles[booking_id].price
-            finalPrice = price-((price/100)*discount)
             contract = Contract(rules=rules if rules else current_contract.rules,
-                                discount=discount if discount else current_contract.discount,
-                                finalPrice=finalPrice if finalPrice else current_contract.finalPrice,
+                                discounts=discounts if discounts else current_contract.discounts,
                                 booking_id=booking_id if booking_id else current_contract.booking_id)
             contract.save()
             print('🛠Договор обновлён.')

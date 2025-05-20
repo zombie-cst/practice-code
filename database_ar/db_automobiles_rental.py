@@ -16,7 +16,6 @@ def initialize_db():
                 model TEXT NOT NULL,
                 yearRelease INTEGER NOT NULL,
                 fuel TEXT NOT NULL,
-                speed REAL NOT NULL,
                 color TEXT NOT NULL,
                 price REAL NOT NULL,
                 bodyType_id INTEGER,
@@ -44,7 +43,6 @@ def initialize_db():
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 rules TEXT NOT NULL,
                 discounts TEXT NOT NULL,
-                finalPrice REAL NOT NULL,
                 booking_id INTEGER,
                 FOREIGN KEY (booking_id) REFERENCES Booking(id))''')
     conn.commit()

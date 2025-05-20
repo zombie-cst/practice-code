@@ -6,12 +6,15 @@ def menu_bodyType():
         print("2. ☑️Добавить тип")
         print("3. ❌Удалить тип")
         print("0. 🚪Назад в главное меню")
-        choice = input("\nВыберите действие: ")
+        choice = input("Выберите действие: ")
         if choice == '1':
             bodyType = get_all_body_type()
-            print('\n📜Список типов:')
-            for n in bodyType:
-                print(f'\n{n.id}. {n.name}')
+            if bodyType is not None:
+                print('\n📜Список типов:')
+                for n in bodyType:
+                    print(f'{n.id}. {n.name}')
+            else:
+                print('Типов кузова пока нет в списке!')
         elif choice == '2':
             print('\n☑️Добавление нового типа.')
             name = input('Название: ')

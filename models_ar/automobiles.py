@@ -1,63 +1,52 @@
 from database_ar.db_automobiles_rental import get_connection
 class Automobiles:
-    def __init__(self, id, brand, model, yearRelease, fuel, 
-                 speed, color, price, bodyType_id):
-        self.__id = id
-        self.__brand = brand
-        self.__model = model
-        self.__yearRelease = yearRelease
-        self.__fuel = fuel
-        self.__speed = speed
-        self.__color = color
-        self.__price = price
-        self.__bodyType_id = bodyType_id
+    def __init__(self, id=None, brand=None, model=None, yearRelease=None, fuel=None, color=None, price=None, bodyType_id=None):
+        self.id = id
+        self.brand = brand
+        self.model = model
+        self.yearRelease = yearRelease
+        self.fuel = fuel
+        self.color = color
+        self.price = price
+        self.bodyType_id = bodyType_id
     
     def save(self):
         conn = get_connection()
         cur = conn.cursor()
-        if self.__id is None:
-            cur.execute('''INSERT INTO Automobiles(brand, model, yearRelease,
-                        fuel, speed, color, price, bodyType_id)
-                        VALUES(?, ?, ?, ?, ?, ?, ?, ?)''',
-                        (self.__brand, self.__model, self.__yearRelease, self.__fuel,
-                         self.__speed, self.__color, self.__price, self.__bodyType_id))
-            self.__id = cur.lastrowid
+        if self.id is None:
+            cur.execute('''INSERT INTO Automobiles(brand, model, yearRelease, fuel, color, price, bodyType_id)
+                        VALUES(?, ?, ?, ?, ?, ?, ?)''',
+                        (self.brand, self.model, self.yearRelease, self.fuel, self.color, self.price, self.bodyType_id))
+            self.id = cur.lastrowid
         else:
-            cur.execute('''UPDATE Automobiles SET brand = ?, model = ?, yearRelease = ?,
-                        fuel = ?, speed = ?, color = ?, price = ?, bodyType_id = ?''',
-                        (self.__brand, self.__model, self.__yearRelease, self.__fuel,
-                         self.__speed, self.__color, self.__price, self.__bodyType_id))
+            cur.execute('''UPDATE Automobiles SET brand = ?, model = ?, yearRelease = ?, fuel = ?, color = ?, price = ?, bodyType_id = ?''',
+                        (self.brand, self.model, self.yearRelease, self.fuel, self.color, self.price, self.bodyType_id))
         conn.commit()
         conn.close()
 
     def delete(self):
-        if self.__id is not None:
+        if self.id is not None:
             conn = get_connection()
             cur = conn.cursor()
-            cur.execute('''DELETE FROM Automobiles WHERE id = ?''', (self.__id,))
+            cur.execute('''DELETE FROM Automobiles WHERE id = ?''', (self.id,))
             conn.commit()
             conn.close()
 
-    def get_all_automobiles(self):
-        if self.__id is not None:
-            conn = get_connection()
-            cur = conn.cursor()
-            cur.execute('''SELECT id, brand, model, yearRelease, fuel, speed, 
-                           color, price, bodyType_id FROM Automobiles''')
-            rows = cur.fetchall()
-            conn.close()
-            return [Automobiles(id=row[0], brand=row[1], model=row[2], yearRelease=row[3], fuel=row[4], 
-                                speed=row[5], color=row[6], price=row[7], bodyType_id=row[8])
-                    for row in rows ]
+def get_all_automobiles():
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute('''SELECT id, brand, model, yearRelease, fuel, color, price, bodyType_id FROM Automobiles''')
+    rows = cur.fetchall()
+    conn.close()
+    return [Automobiles(id=row[0], brand=row[1], model=row[2], yearRelease=row[3], fuel=row[4], color=row[5], price=row[6], bodyType_id=row[7])
+            for row in rows ]
 
-    def get_automobiles_by_id(automobiles_id):
-        conn = get_connection()
-        cursor = conn.cursor()
-        cursor.execute("""SELECT id, brand, model, yearRelease, fuel, speed, 
-                       color, price, bodyType_id FROM Automobiles WHERE id = ? """, (automobiles_id,))
-        row = cursor.fetchone()
-        conn.close()
-        if row:
-            return Automobiles(id=row[0], brand=row[1], model=row[2], yearRelease=row[3], fuel=row[4],
-                               speed=row[5], color=row[6], price=row[7], bodyType_id=row[8])
-        return None
+def get_automobiles_by_id(automobiles_id):
+    conn = get_connection()
+    cursor = conn.cursor()
+    cursor.execute('''SELECT id, brand, model, yearRelease, fuel, color, price, bodyType_id FROM Automobiles WHERE id = ?''', (automobiles_id,))
+    row = cursor.fetchone()
+    conn.close()
+    if row:
+        return Automobiles(id=row[0], brand=row[1], model=row[2], yearRelease=row[3], fuel=row[4], color=row[5], price=row[6], bodyType_id=row[7])
+    return None

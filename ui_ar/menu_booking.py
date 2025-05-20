@@ -9,14 +9,17 @@ def menu_booking():
         print("3. ❌Удалить бронь")
         print("4. 🛠Изменить бронь")
         print("0. 🚪Назад в главное меню")
-        choice = input("\nВыберите действие: ")
+        choice = input("Выберите действие: ")
         if choice == '1':
             booking = get_all_booking()
-            print('\n📜Список броней:')
-            for n in booking:
-                print(f'\n{n.id}. Даты выдачи и возврата:{n.dateIssue} - {n.returnDate} | Адрес: {n.addres} '
-                      f'\nАвтомобиль: {n.automobiles_id}'
-                      f'\nКлиент{n.clients_id}')
+            if booking is not None:
+                print('\n📜Список броней:')
+                for n in booking:
+                    print(f'{n.id}. Даты выдачи и возврата:{n.dateIssue} - {n.returnDate} | Адрес: {n.addres} '
+                          f'\nАвтомобиль ID: {n.automobiles_id}'
+                          f'\nКлиент ID: {n.clients_id}')
+            else:
+                print('Брони пока нет в списке!')
         elif choice == '2':
             print('\n☑️Добавление новую бронь.')
             dateIssue = input('Дата выпуска: ')
@@ -25,15 +28,16 @@ def menu_booking():
             print('\nДоступные автомобили:')
             automobiles = get_all_automobiles()
             for n in automobiles:
-                print(f"{n.id} - {n.name}")
+                print(f'{n.id} - {n.brand} {n.model} | Кузов ID: {n.bodyType_id} | Цена: {n.price}'
+                      f'\nТопливо: {n.fuel} Цвет: {n.color} | Год выпуска: {n.yearRelease}')
             automobiles_id = int(input('Введите ID автомобиля: '))
             print('\nДоступные клиенты:')
             clients = get_all_clients()
             for n in clients:
-                print(f"{n.id} - {n.name}")
+                print(f'{n.id}. ФИО: {n.lastName} {n.firstName} {n.patronymic}'
+                        f'\nНомер телефона: {n.phoneNumber} | Адрес: {n.addres}')
             clients_id = int(input('Введите ID клиента: '))
-            booking = Booking(dateIssue=dateIssue, returnDate=returnDate, addres=addres,
-                              automobiles_id=automobiles_id, clients_id=clients_id)
+            booking = Booking(dateIssue=dateIssue, returnDate=returnDate, addres=addres, automobiles_id=automobiles_id, clients_id=clients_id)
             booking.save()
             print('☑️Бронь добавлен.')
         elif choice == '3':
@@ -57,12 +61,14 @@ def menu_booking():
             print('\nДоступные автомобили:')
             automobiles = get_all_automobiles()
             for n in automobiles:
-                print(f"{n.id} - {n.name}")
+                print(f'{n.id} - {n.brand} {n.model} | Кузов ID: {n.bodyType_id} | Цена: {n.price}'
+                      f'\nТопливо: {n.fuel} | Цвет: {n.color} | Год выпуска: {n.yearRelease}')
             automobiles_id = int(input('Введите ID автомобиля: '))
             print('\nДоступные клиенты:')
             clients = get_all_clients()
             for n in clients:
-                print(f"{n.id} - {n.name}")
+                print(f'{n.id}. ФИО: {n.lastName} {n.firstName} {n.patronymic}'
+                          f'\nНомер телефона: {n.phoneNumber} | Адрес: {n.addres}')
             clients_id = int(input('Введите ID клиента: '))
             booking = Booking(dateIssue=dateIssue if dateIssue else current_booking.dateIssue,
                                       returnDate=returnDate if returnDate else current_booking.returnDate,

@@ -8,13 +8,16 @@ def menu_automobiles():
         print("3. ❌Удалить автомобиль.")
         print("4. 🛠Изменить автомобиль.")
         print("0. 🚪Назад в главное меню.")
-        choice = input("\nВыберите действие: ")
+        choice = input("Выберите действие: ")
         if choice == '1':
             automobiles = get_all_automobiles()
-            print('\n📜Список автомобилей:')
-            for n in automobiles:
-                print(f'\n{n.id}. {n.brand} | Модель: {n.model} | Кузов: {n.bodyType_id} | Цена: {n.price} '
-                      f'\nТопливо: {n.fuel} | Скорость: {n.speed}км | Цвет: {n.color} | Год выпуска: {n.yearRelease} ')
+            if automobiles is not None:
+                print('\n📜Список автомобилей:')
+                for n in automobiles:
+                    print(f'{n.id}. {n.brand} {n.model} | Кузов ID: {n.bodyType_id} | Цена: {n.price} '
+                          f'\nТопливо: {n.fuel} | Цвет: {n.color} | Год выпуска: {n.yearRelease}')
+            else:
+                print('Автомобилей пока нет в списке!')
         elif choice == '2':
             print('\n☑️Добавление нового автомобиля.')
             brand = input('Бренд: ')
@@ -24,13 +27,11 @@ def menu_automobiles():
             for n in type:
                 print(f"{n.id} - {n.name}")
             bodyType_id = int(input('Введите ID типа: '))
-            price = float(input('Цена: '))
+            price = float(input('Цена(в день): '))
             fuel = input('Топливо: ')
-            speed = int(input('Скорость(км): '))
             color = input('Цвет: ')
             yearRelease = int(input('Год выпуска: '))
-            automobiles = Automobiles(brand=brand, model=model, yearRelease=yearRelease, fuel=fuel,
-                                      speed=speed, color=color, price=price, bodyType_id=bodyType_id)
+            automobiles = Automobiles(brand=brand, model=model, yearRelease=yearRelease, fuel=fuel, color=color, price=price, bodyType_id=bodyType_id)
             automobiles.save()
             print('☑️Автомобиль добавлен.')
         elif choice == '3':
@@ -57,14 +58,12 @@ def menu_automobiles():
             bodyType_id = int(input('Введите ID типа: '))
             price = float(input('Цена: '))
             fuel = input('Топливо: ')
-            speed = int(input('Скорость(км): '))
             color = input('Цвет: ')
             yearRelease = int(input('Год выпуска: '))
             automobiles = Automobiles(brand=brand if brand else current_automobiles.brand,
                                       model=model if model else current_automobiles.model,
                                       yearRelease=yearRelease if yearRelease else current_automobiles.yearRelease,
                                       fuel=fuel if fuel else current_automobiles.fuel,
-                                      speed=speed if speed else current_automobiles.speed,
                                       color=color if color else current_automobiles.color,
                                       price=price if price else current_automobiles.price,
                                       bodyType_id=bodyType_id if bodyType_id else current_automobiles.bodyType_id)
