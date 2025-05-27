@@ -1,24 +1,31 @@
 from database_ar.db_automobiles_rental import get_connection
+
+
 class Clients:
-    def __init__(self, id=None, firstName=None, lastName=None, patronymic=None, addres=None, phoneNumber=None):
+    def __init__(self, id=None, first_name=None, last_name=None,
+                 patronymic=None, addres=None, phone_number=None):
         self.id = id
-        self.firstName = firstName
-        self.lastName = lastName
+        self.first_name = first_name
+        self.last_name = last_name
         self.patronymic = patronymic
         self.addres = addres
-        self.phoneNumber = phoneNumber
-    
+        self.phone_number = phone_number
+
     def save(self):
         conn = get_connection()
         cur = conn.cursor()
-        if self.id is None:
-            cur.execute('''INSERT INTO Clients(firstName, lastName, patronymic, addres, phoneNumber)
+        if self.id is not None:
+            cur.execute('''INSERT INTO Clients(first_name, last_name,
+                        patronymic, addres, phone_number)
                         VALUES(?, ?, ?, ?, ?)''',
-                        (self.firstName, self.lastName, self.patronymic, self.addres, self.phoneNumber))
+                        (self.first_name, self.last_name, self.patronymic,
+                         self.addres, self.phone_number))
             self.id = cur.lastrowid
         else:
-            cur.execute('''UPDATE Clients SET firstName = ?, lastName = ?, patronymic = ?, addres = ?, phoneNumber = ?''',
-                        (self.firstName, self.lastName, self.patronymic, self.addres, self.phoneNumber))
+            cur.execute('''UPDATE Clients SET first_name = ?, last_name = ?,
+                        patronymic = ?, addres = ?, phone_number = ?''',
+                        (self.first_name, self.last_name, self.patronymic,
+                         self.addres, self.phone_number))
         conn.commit()
         conn.close()
 
@@ -30,21 +37,14 @@ class Clients:
             conn.commit()
             conn.close()
 
+
 def get_all_clients():
     conn = get_connection()
     cur = conn.cursor()
-    cur.execute('''SELECT id, firstName, lastName, patronymic, addres, phoneNumber FROM Clients''')
+    cur.execute('''SELECT id, first_name, last_name, patronymic,
+                addres, phone_number FROM Clients''')
     rows = cur.fetchall()
     conn.close()
-    return [Clients(id=row[0], firstName=row[1], lastName=row[2], patronymic=row[3], addres=row[4], phoneNumber=row[5])
-            for row in rows ]
-
-def get_clients_by_id(clients_id):
-    conn = get_connection()
-    cursor = conn.cursor()
-    cursor.execute('''SELECT id, firstName, lastName, patronymic, addres, phoneNumber FROM Clients WHERE id = ?''', (clients_id,))
-    row = cursor.fetchone()
-    conn.close()
-    if row:
-        return Clients(id=row[0], firstName=row[1], lastName=row[2], patronymic=row[3], addres=row[4], phoneNumber=row[5])
-    return None
+    return [Clients(id=row[0], first_name=row[1], last_name=row[2],
+                    patronymic=row[3], addres=row[4], phone_number=row[5])
+            for row in rows]

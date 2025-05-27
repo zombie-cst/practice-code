@@ -1,80 +1,97 @@
 from models_ar.booking import Booking, get_all_booking
-from models_ar.automobiles import get_all_automobiles, get_automobiles_by_id
-from models_ar.clients import get_all_clients, get_clients_by_id
+from models_ar.automobiles import get_all_automobiles
+from models_ar.clients import get_all_clients
+
 def menu_booking():
     while True:
-        print("\n=== Бронь 🔑 ===")
+        print("\n----- Бронь 🔑 -----")
         print("1. 👀Показать все брони")
         print("2. ☑️Добавить бронь")
-        print("3. ❌Удалить бронь")
+        print("3. 🗑Удалить бронь")
         print("4. 🛠Изменить бронь")
         print("0. 🚪Назад в главное меню")
         choice = input("Выберите действие: ")
         if choice == '1':
             booking = get_all_booking()
-            if booking is not None:
+            if booking is None:
                 print('\n📜Список броней:')
+                booking = get_all_booking()
                 for n in booking:
-                    print(f'{n.id}. Даты выдачи и возврата:{n.dateIssue} - {n.returnDate} | Адрес: {n.addres} '
+                    print(f'{n.id}. '
+                          f'Даты выдачи и возврата: {n.date_issue}-{n.return_date}'
+                          f'\nАдрес: {n.addres} '
                           f'\nАвтомобиль ID: {n.automobiles_id}'
                           f'\nКлиент ID: {n.clients_id}')
             else:
-                print('Брони пока нет в списке!')
+                print('\n❌Брони пока нет в списке!')
         elif choice == '2':
             print('\n☑️Добавление новую бронь.')
-            dateIssue = input('Дата выпуска: ')
-            returnDate = input('Дата возврата: ')
+            date_issue = input('Дата выпуска: ')
+            return_date = input('Дата возврата: ')
             addres = input('Адрес: ')
-            print('\nДоступные автомобили:')
+            print('Доступные автомобили:')
             automobiles = get_all_automobiles()
             for n in automobiles:
-                print(f'{n.id} - {n.brand} {n.model} | Кузов ID: {n.bodyType_id} | Цена: {n.price}'
-                      f'\nТопливо: {n.fuel} Цвет: {n.color} | Год выпуска: {n.yearRelease}')
+                print(f'{n.id} - {n.brand} {n.model} '
+                f'| Кузов ID: {n.body_type_id} | Цена за день: {n.price}'
+                f'\nТопливо: {n.fuel} Цвет: {n.color} '
+                f'| Год выпуска: {n.year_release}')
             automobiles_id = int(input('Введите ID автомобиля: '))
-            print('\nДоступные клиенты:')
+            print('Доступные клиенты:')
             clients = get_all_clients()
             for n in clients:
-                print(f'{n.id}. ФИО: {n.lastName} {n.firstName} {n.patronymic}'
-                        f'\nНомер телефона: {n.phoneNumber} | Адрес: {n.addres}')
+                print(f'{n.id}. ФИО: {n.last_name} {n.first_name} {n.patronymic}'
+                        f'\nНомер телефона: {n.phone_number} '
+                        f'| Адрес: {n.addres}')
             clients_id = int(input('Введите ID клиента: '))
-            booking = Booking(dateIssue=dateIssue, returnDate=returnDate, addres=addres, automobiles_id=automobiles_id, clients_id=clients_id)
+            booking = Booking(date_issue=date_issue, return_date=return_date,
+                              addres=addres, automobiles_id=automobiles_id,
+                              clients_id=clients_id)
             booking.save()
             print('☑️Бронь добавлен.')
         elif choice == '3':
-            id = int(input('❌Введите ID брони, который хотите удалить: '))
+            id = int(input('🗑Введите ID брони, для удаления: '))
             if id is not None:
-                booking = Booking(id=int(id))
-                booking.delete()
-                print('❌Бронь удалён.')
+                decision = input('Вы действительно хотите удалить эту бронь? (д/н): ')
+                if decision == 'д':
+                    contract = Booking(id=int(id))
+                    contract.delete()
+                    print('🗑Бронь удалена.')
+                else:
+                    print('❌Бронь не удалена.')
             else:
-                print('Бронь не найдена!')
+                print('❌Бронь не найдена!')
         elif choice == '4':
-            id = int(input('🛠Введите ID брони, который хотите обновить: '))
-            print("\nОставьте поле пустым, чтобы не изменять значение.")
-            current_booking = next((p for p in get_all_booking if p.id == id), None)
+            id = int(input('\n🛠Введите ID брони, для обновления: '))
+            print("Оставьте поле пустым, чтобы не изменять значение.")
+            current_booking = next((p for p in get_all_booking() 
+                                    if p.id == id), None)
             if not current_booking:
-                print("Бронь не найдена!")
+                print("❌Бронь не найдена!")
                 continue
-            dateIssue = input('Дата выпуска: ')
-            returnDate = input('Дата возврата: ')
+            date_issue = input('Дата выпуска: ')
+            return_date = input('Дата возврата: ')
             addres = input('Адрес: ')
-            print('\nДоступные автомобили:')
+            print('Доступные автомобили:')
             automobiles = get_all_automobiles()
             for n in automobiles:
-                print(f'{n.id} - {n.brand} {n.model} | Кузов ID: {n.bodyType_id} | Цена: {n.price}'
-                      f'\nТопливо: {n.fuel} | Цвет: {n.color} | Год выпуска: {n.yearRelease}')
-            automobiles_id = int(input('Введите ID автомобиля: '))
-            print('\nДоступные клиенты:')
+                print(f'{n.id} - {n.brand} {n.model} '
+                f'| Кузов ID: {n.body_type_id} | Цена за день: {n.price}'
+                f'\nТопливо: {n.fuel} Цвет: {n.color} '
+                f'| Год выпуска: {n.year_release}')
+            automobiles_id = input('Введите ID автомобиля: ')
+            print('Доступные клиенты:')
             clients = get_all_clients()
             for n in clients:
-                print(f'{n.id}. ФИО: {n.lastName} {n.firstName} {n.patronymic}'
-                          f'\nНомер телефона: {n.phoneNumber} | Адрес: {n.addres}')
-            clients_id = int(input('Введите ID клиента: '))
-            booking = Booking(dateIssue=dateIssue if dateIssue else current_booking.dateIssue,
-                                      returnDate=returnDate if returnDate else current_booking.returnDate,
-                                      addres=addres if addres else current_booking.addres,
-                                      automobiles_id=automobiles_id if automobiles_id else current_booking.automobiles_id,
-                                      clients_id=clients_id if clients_id else current_booking.clients_id,)
+                print(f'{n.id}. ФИО: {n.last_name} {n.first_name} {n.patronymic}'
+                        f'\nНомер телефона: {n.phone_number} '
+                        f'| Адрес: {n.addres}')
+            clients_id = input('Введите ID клиента: ')
+            booking = Booking(date_issue=date_issue if date_issue else current_booking.date_issue,
+                              return_date=return_date if return_date else current_booking.return_date,
+                              addres=addres if addres else current_booking.addres,
+                              automobiles_id=int(automobiles_id) if automobiles_id else current_booking.automobiles_id,
+                              clients_id=int(clients_id) if clients_id else current_booking.clients_id,)
             booking.save()
             print('🛠Бронь обновлён.')
         elif choice == '0':
