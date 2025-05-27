@@ -4,23 +4,13 @@ from models_ar.booking import get_all_booking
 def menu_contract():
     while True:
         print("\n----- Договоры 📑 -----")
-        print("1. 👀Показать все договоры")
-        print("2. ☑️Добавения договор")
+        print("1. ☑️Добавения договор")
+        print("2. 👀Показать все договоры")
         print("3. 🗑Удаления договор")
         print("4. 🛠Изменения договор")
         print("0. 🚪Назад в главное меню")
         choice = input("Выберите действие: ")
         if choice == '1':
-            contract = get_all_contract()
-            if contract is None:
-                print('\n📜Список договоров:')
-                contract = get_all_contract()
-                for n in contract:
-                    print(f'{n.id}. Штрафы: {n.rules}, Скидкa: {n.discounts}%'
-                          f'\nБронь ID: {n.booking_id}')
-            else:
-                print('\n❌Договоров пока нет в списке!')
-        elif choice == '2':
             print('\n☑️Добавление нового договора.')
             rules = input('Штрафы: ')
             if rules == '':
@@ -40,6 +30,12 @@ def menu_contract():
                                 booking_id=booking_id)
             contract.save()
             print('☑️Договор добавлен.')
+        elif choice == '2':
+            contract = get_all_contract()
+            print('\n📜Список договоров:')
+            for n in contract:
+                print(f'{n.id}. Штрафы: {n.rules}, Скидкa: {n.discounts}%'
+                      f'\nБронь ID: {n.booking_id}')
         elif choice == '3':
             id = int(input('🗑Введите ID договора, для удаления: '))
             if id is not None:

@@ -3,24 +3,13 @@ from models_ar.clients import Clients, get_all_clients
 def menu_clients():
     while True:
         print("\n----- Клиенты 👥 -----")
-        print("1. 👀Показать всех клиентов")
-        print("2. ☑️Добавения клиента")
+        print("1. ☑️Добавения клиента")
+        print("2. 👀Показать всех клиентов")
         print("3. 🗑Удаления клиента")
         print("4. 🛠Изменения клиента")
         print("0. 🚪Назад в главное меню")
         choice = input("Выберите действие: ")
         if choice == '1':
-            clients = get_all_clients()
-            if clients is None:
-                print('\n📜Список клиентов:')
-                clients = get_all_clients()
-                for n in clients:
-                    print(f'{n.id}. ФИО: {n.last_name} {n.first_name} {n.patronymic}'
-                          f'\nНомер телефона: {n.phone_number}'
-                          f'\nАдрес: {n.addres}')
-            else:
-                print('\n❌Клиентов пока нет в списке!')
-        elif choice == '2':
             print('\n☑️Добавление нового клиента.')
             first_name = input('Имя: ')
             last_name = input('Фамилия: ')
@@ -32,6 +21,13 @@ def menu_clients():
                               phone_number=phone_number)
             clients.save()
             print('☑️Клиент добавлен.')
+        elif choice == '2':
+            clients = get_all_clients()
+            print('\n📜Список клиентов:')
+            for n in clients:
+                print(f'{n.id}. ФИО: {n.last_name} {n.first_name} {n.patronymic}'
+                      f'\nНомер телефона: {n.phone_number}'
+                      f'\nАдрес: {n.addres}')
         elif choice == '3':
             id = int(input('🗑Введите ID клиента, для удаления: '))
             if id is not None:

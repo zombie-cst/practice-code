@@ -1,5 +1,6 @@
 from database_ar.db_automobiles_rental import initialize_db
 from ui_ar.menu import main_menu
+from ui_ar.menu_employees import menu_employees
 from ui_ar.menu_body_type import menu_body_type
 from ui_ar.menu_automobiles import menu_automobiles
 from ui_ar.menu_clients import menu_clients
@@ -11,14 +12,16 @@ def main():
     while True:
         choice = main_menu()
         if choice == '1':
-            menu_body_type()
+            menu_employees()
         elif choice == '2':
-            menu_automobiles()
+            menu_body_type()
         elif choice == '3':
-            menu_clients()
+            menu_automobiles()
         elif choice == '4':
-            menu_booking()
+            menu_clients()
         elif choice == '5':
+            menu_booking()
+        elif choice == '6':
             menu_contract()
         elif choice == '0':
             print('\n🚪Выход из программы.')

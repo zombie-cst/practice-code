@@ -11,18 +11,6 @@ def menu_automobiles():
         print("0. 🚪Назад в главное меню.")
         choice = input("Выберите действие: ")
         if choice == '1':
-            automobiles = get_all_automobiles()
-            if automobiles is None:
-                print('\n📜Список автомобилей:')
-                automobiles = get_all_automobiles()
-                for n in automobiles:
-                    print(f'{n.id}. {n.brand} {n.model} '
-                          f'| Кузов ID: {n.body_type_id} | Цена за день: {n.price} '
-                          f'\nТопливо: {n.fuel} | Цвет: {n.color} '
-                          f'| Год выпуска: {n.year_release}')
-            else:
-                print('\n❌Автомобилей пока нет в списке!')
-        elif choice == '2':
             print('\n☑️Добавление нового автомобиля.')
             brand = input('Бренд: ')
             model = input('Модель: ')
@@ -42,6 +30,13 @@ def menu_automobiles():
                                       body_type_id=body_type_id)
             automobiles.save()
             print('☑️Автомобиль добавлен.')
+        elif choice == '2':
+            automobiles = get_all_automobiles()
+            for n in automobiles:
+                print(f'{n.id}. {n.brand} {n.model} '
+                      f'| Кузов ID: {n.body_type_id} | Цена за день: {n.price} '
+                      f'\nТопливо: {n.fuel} | Цвет: {n.color} '
+                      f'| Год выпуска: {n.year_release}')
         elif choice == '3':
             id = int(input('🗑Введите ID автомобиля, для удаления: '))
             if id is not None:

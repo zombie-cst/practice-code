@@ -7,6 +7,12 @@ def get_connection():
 def initialize_db():
     conn = get_connection()
     cur = conn.cursor()
+    cur.execute('''CREATE TABLE IF NOT EXISTS Employees(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                first_name TEXT NOT NULL,
+                last_name TEXT NOT NULL,
+                patronymic TEXT NOT NULL,
+                phone_number TEXT NOT NULL)''')
     cur.execute('''CREATE TABLE IF NOT EXISTS BodyType(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 name TEXT NOT NULL)''')
@@ -34,8 +40,10 @@ def initialize_db():
                 addres TEXT NOT NULL,
                 automobiles_id INTEGER,
                 clients_id INTEGER,
+                employees_id INTEGER,
                 FOREIGN KEY (automobiles_id) REFERENCES Automobiles(id),
-                FOREIGN KEY (clients_id) REFERENCES Clients(id))''')
+                FOREIGN KEY (clients_id) REFERENCES Clients(id),
+                FOREIGN KEY (employees_id) REFERENCES Employees(id))''')
     cur.execute('''CREATE TABLE IF NOT EXISTS Contract(
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 rules TEXT NOT NULL,
