@@ -12,7 +12,7 @@ class Employees:
     def save(self):
         conn = get_connection()
         cur = conn.cursor()
-        if self.id is not None:
+        if self.id is None:
             cur.execute('''INSERT INTO Employees(first_name, last_name,
                         patronymic, phone_number)
                         VALUES(?, ?, ?, ?)''',

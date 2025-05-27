@@ -6,7 +6,7 @@ class BodyType:
         self.name = name
     
     def save(self):
-        if self.id is not None:
+        if self.id is None:
             conn = get_connection()
             cur = conn.cursor()
             cur.execute('''INSERT INTO BodyType(name) VALUES(?)''',

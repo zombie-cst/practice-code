@@ -13,7 +13,7 @@ class Clients:
     def save(self):
         conn = get_connection()
         cur = conn.cursor()
-        if self.id is not None:
+        if self.id is None:
             cur.execute('''INSERT INTO Clients(first_name, last_name,
                         patronymic, addres, phone_number)
                         VALUES(?, ?, ?, ?, ?)''',

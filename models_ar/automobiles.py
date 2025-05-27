@@ -15,7 +15,7 @@ class Automobiles:
     def save(self):
         conn = get_connection()
         cur = conn.cursor()
-        if self.id is not None:
+        if self.id is None:
             cur.execute('''INSERT INTO Automobiles(brand, model,
                         year_release, fuel, color, price, body_type_id)
                         VALUES(?, ?, ?, ?, ?, ?, ?)''',

@@ -52,7 +52,7 @@ def menu_booking():
                       f'\nАдрес: {n.addres} '
                       f'\nАвтомобиль ID: {n.automobiles_id}'
                       f'\nКлиент ID: {n.clients_id}'
-                      f'\nСоружник: {n.employees_id}')
+                      f'\nСотрудник: {n.employees_id}')
         elif choice == '3':
             id = int(input('🗑Введите ID брони, для удаления: '))
             if id is not None:

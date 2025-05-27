@@ -10,7 +10,7 @@ class Contract:
     def save(self):
         conn = get_connection()
         cur = conn.cursor()
-        if self.id is not None:
+        if self.id is None:
             cur.execute('''INSERT INTO Contract(rules, discounts, booking_id)
                         VALUES(?, ?, ?)''',
                         (self.rules, self.discounts, self.booking_id))
